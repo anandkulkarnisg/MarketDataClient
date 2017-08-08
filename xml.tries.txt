@@ -1,0 +1,157 @@
+
+<FastQuoteResult xmlns="http://quote.cnbc.com/services/MultiQuote/2006">
+  <FastQuote>
+    <symbol>@GC.1</symbol>
+    <code>0</code>
+    <shortName>GOLD</shortName>
+    <last>1254.9</last>
+    <change>0.0</change>
+    <change_pct>0.0</change_pct>
+    <provider>CNBC Quote Cache</provider>
+    <cacheServed>false</cacheServed>
+    <cachedTime>Sun Jul 23 21:40:14 EDT 2017</cachedTime>
+    <responseTime>Sun Jul 23 21:40:14 EDT 2017</responseTime>
+    <realTime>false</realTime>
+    <quoteDesc/>
+    <source></source>
+  </FastQuote>
+</FastQuoteResult>
+
+
+
+
+//		DocumentBuilder builder = null;		
+//		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//		try
+//		{
+//			builder = factory.newDocumentBuilder();
+//		} catch (ParserConfigurationException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		StringBuilder xmlStringBuilder = new StringBuilder();
+//		Document doc = null;
+//		try
+//		{
+//			doc = builder.parse(new ByteArrayInputStream(response.toString().getBytes("UTF-8")));
+//		} catch (SAXException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		Element root = doc.getDocumentElement();
+//		NamedNodeMap nodeMap = doc.getAttributes();
+	
+		
+//		System.out.println("resulting xml is =" + response);
+//		parseXML(response.toString());
+
+		// DocumentBuilderFactory domFactory =
+		// DocumentBuilderFactory.newInstance();
+		// try {
+		// DocumentBuilder builder = domFactory.newDocumentBuilder();
+		// Document dDoc = builder.parse(response.toString());
+		//
+		// XPath xPath = XPathFactory.newInstance().newXPath();
+		// Node node = (Node) xPath.evaluate("/FastQuote/@symbol", dDoc,
+		// XPathConstants.NODE);
+		// System.out.println(node.getNodeValue());
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+
+		// DocumentBuilderFactory factory =
+		// DocumentBuilderFactory.newInstance();
+		// DocumentBuilder builder = null;
+		// try
+		// {
+		// builder = factory.newDocumentBuilder();
+		// } catch (ParserConfigurationException e)
+		// {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// Document document = null;
+		// try
+		// {
+		// document = builder.parse(new InputSource(new
+		// StringReader(response.toString())));
+		// } catch (SAXException e)
+		// {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (IOException e)
+		// {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// Element rootElement = document.getDocumentElement();
+		// String result = "";
+		//
+		// NodeList list = rootElement.getElementsByTagName("FastQuote/@GC.1");
+		// if (list != null && list.getLength() > 0)
+		// {
+		// NodeList subList = list.item(0).getChildNodes();
+		//
+		// if (subList != null && subList.getLength() > 0)
+		// {
+		// result = subList.item(0).getNodeValue();
+		// }
+		// }
+
+
+
+
+//	private String parseXML(String input)
+//	{
+//		try
+//		{
+////			File fXmlFile = new File("/Users/mkyong/staff.xml");
+//			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//			Document doc = dBuilder.parse(input);
+//
+//			// optional, but recommended
+//			// read this -
+//			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+//			doc.getDocumentElement().normalize();
+//
+//			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+//
+//			NodeList nList = doc.getElementsByTagName("staff");
+//
+//			System.out.println("----------------------------");
+//
+//			for (int temp = 0; temp < nList.getLength(); temp++)
+//			{
+//
+//				Node nNode = nList.item(temp);
+//
+//				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+//
+//				if (nNode.getNodeType() == Node.ELEMENT_NODE)
+//				{
+//					Element eElement = (Element) nNode;
+//					System.out.println("Staff id : " + eElement.getAttribute("id"));
+//					System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+//					System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
+//					System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
+//					System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
+//				}
+//			}
+//		} catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//
+//		return ("Hello");
+//	}
+
+

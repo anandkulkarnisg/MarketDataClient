@@ -1,0 +1,19 @@
+#!/bin/bash
+
+backupcwd=$PWD
+cwd=$PWD
+if [ "$cwd" != "/home/anand/repogit/java/eclipse/MarketDataClients" ] ; then
+	cd /home/anand/repogit/java/eclipse/MarketDataClients
+	cwd=$PWD
+fi
+
+rm -rf $cwd/deploy/MarketDataClient.jar
+rm -rf $cwd/deploy/resources/
+rm -rf $cwd/deploy/kdb/
+
+cp runjar/MarketDataClient.jar $cwd/deploy/
+cp -R $cwd/resources $cwd/deploy
+mkdir -p $cwd/deploy/kdb/
+cp $cwd/kdb/icicistart.q deploy/kdb/icicistart.q
+cp $cwd/kdb/cnbcstart.q deploy/kdb/cnbcstart.q
+cd $backupcwd

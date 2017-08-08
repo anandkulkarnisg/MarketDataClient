@@ -1,0 +1,17 @@
+<FastQuoteResult xmlns="http://quote.cnbc.com/services/MultiQuote/2006">
+  <FastQuote>
+    <symbol>@GC.1</symbol>
+    <code>0</code>
+    <shortName>GOLD</shortName>
+    <last>1253.9</last>
+    <change>-1.0</change>
+    <change_pct>-0.079687625</change_pct>
+    <provider>CNBC Quote Cache</provider>
+    <cacheServed>false</cacheServed>
+    <cachedTime>Sun Jul 23 22:46:19 EDT 2017</cachedTime>
+    <responseTime>Sun Jul 23 22:46:19 EDT 2017</responseTime>
+    <realTime>false</realTime>
+    <quoteDesc/>
+    <source></source>
+  </FastQuote>
+</FastQuoteResult>

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+timeStamp=$(date "+%Y-%m-%d.%H.%M.%S")
+logFile=$(echo "tickresult.$1.$timeStamp.log")
+startTime=$(date)
+java -jar MarketDataClient.jar $1 >> $logFile
+endTime=$(date)
+echo -e "start Time = $startTime" >> $logFile
+echo -e "endTime = $endTime" >> $logFile

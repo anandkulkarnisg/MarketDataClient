@@ -1,0 +1,525 @@
+$Id: RELEASE-NOTES.txt 1781750 2017-02-05 13:28:01Z britter $
+
+                        Apache Commons Configuration
+                               Version 2.1.1
+                               Release Notes
+
+
+INTRODUCTION:
+=============
+
+This document contains the release notes for this version of the Commons
+Configuration component. It describes the changes since the previous version.
+The Commons Configuration software library provides a generic configuration
+interface which enables an application to read configuration data from a
+variety of sources.
+
+The release is fully source and binary compatible with version 2.1.
+
+Commons Configuration 2.1 requires Java 1.6 or higher.
+
+Fixed Bugs
+==========
+o CONFIGURATION-649
+  Improved the handling of lists defined by a string with delimiter characters
+  in XMLConfiguration. Such lists now retain their original format when the
+  configuration is saved.
+
+o CONFIGURATION-648
+  Made the IOFactory property of PropertiesBuilderParameter compatible with the
+  most recent version of Commons BeanUtils. This version changed the handling
+  of properties starting with multiple uppercase letters.
+
+o CONFIGURATION-646
+  PropertiesConfiguration now works correctly with the auto-save mode.
+
+o CONFIGURATION-644
+  PropertiesConfigurationLayout no longer duplicates a header comment if a file
+  with another comment is loaded. Thanks to Andrew DeMaria.
+
+o CONFIGURATION-643
+  Documentation improvements for the user's guide.
+
+o CONFIGURATION-641
+  Improved documentation of FileBased interface. The Javadocs now state
+  explicitly that the methods should not be called by client code. Exception
+  handling in configuration classes implementing FileLocatorAware has been
+  improved.
+
+o CONFIGURATION-640
+  PropertiesConfiguration now correctly unescapes some special characters that
+  are always escaped in Java properties files.
+
+Other changes
+=============
+o CONFIGURATION-639
+  In the OSGi bundle manifest of the Commons Configuration bundle the package
+  imports for Spring packages are now marked as optional.
+  Thanks to Rico Neubauer.
+
+o CONFIGURATION-638
+  Improved handling of temporary files and folders in unit tests.
+  Thanks to Ahmet Celik.
+
+o CONFIGURATION-627
+  Updated dependency to Commons BeanUtils to version 1.9.3. This fixes an issue
+  with an exception stacktrace that was logged when a ConfigurationBuilder was
+  used.
+
+
+Historical list of changes: http://commons.apache.org/proper/commons-configuration/changes-report.html
+
+For complete information on Apache Commons Configuration, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Configuration website:
+
+http://commons.apache.org/proper/commons-configuration/
+
+
+Older release notes
+===================
+
+                        Commons Configuration Package
+                                 Version 2.1
+                                Release Notes
+
+INTRODUCTION
+============
+
+This document contains the release notes for this version of the Commons
+Configuration component. It describes the changes since the previous version.
+The Commons Configuration software library provides a generic configuration
+interface which enables an application to read configuration data from a variety
+of sources.
+
+Version 2.1 is a first bug-fix release for the Configuration 2.x series and
+also adds a new feature related to the integration with the Spring framework.
+A list of all changes can be found below.
+
+The release is fully source and binary compatible with version 2.0.
+
+Commons Configuration 2.1 requires Java 1.6 or higher.
+
+New Features
+============
+o CONFIGURATION-636
+  PropertiesConfigurationLayout now allows manipulating the order of keys when
+  the properties file is written.
+
+o CONFIGURATION-624
+  Support Commons Configuration as PropertySource in Spring.
+
+Fixed Bugs
+==========
+o CONFIGURATION-634
+  HomeDirectoryLocationStrategy now works correctly in the mode that evaluates
+  the FileLocator's base path.
+
+o CONFIGURATION-633
+  Interpolation was improved to better support properties with multiple values.
+
+o CONFIGURATION-632
+  The methods getStringArray() and getList() of CompositeConfiguration now
+  support the interpolation of variables that reference properties with
+  multiple values.
+
+o CONFIGURATION-622
+  Fixed a problem in INIConfiguration.write() with keys containing a separator
+  character. This separator had been duplicated. Such keys are now handled
+  correctly when the configuration is saved.
+
+Other changes
+=============
+o CONFIGURATION-628
+  Support for the ant build was dropped.
+
+o CONFIGURATION-626
+  ImmutableConfiguration.getArray() has been deprecated. Arrays can now be
+  queried using the generic get() method in a type-safe way.
+
+o CONFIGURATION-631
+  Updated optional dependency to Apache Commons VFS from 2.0 to 2.1. (The older
+  version still works.)
+
+o CONFIGURATION-635
+  Updated optional dependency to Apache Commons Codec from 1.9 to 1.10. (The
+  older version still works.)
+
+
+Historical list of changes: http://commons.apache.org/proper/commons-configuration/changes-report.html
+
+For complete information on Apache Commons Configuration, including instructions
+on how to submit bug reports, patches, or suggestions for improvement, see the
+Apache Commons Configuration website:
+http://commons.apache.org/proper/commons-configuration/
+
+                        Commons Configuration Package
+                                 Version 2.0
+                                Release Notes
+
+INTRODUCTION
+============
+
+After a series of alpha and beta releases (please consult the corresponding
+release notes below), this is the first final release for Apache Commons
+Configuration 2.0.
+
+Version 2.0 is a complete redesign of the Configuration 1.x API with the aim to
+fix some limitations in the original design and make the library more flexible
+and powerful. Therefore, this release is not a drop-in replacement for Commons
+Configuration 1.x; there have been incompatible changes in many areas that
+require adaptations on client code. A migration guide is available at
+
+http://commons.apache.org/configuration/userguide/upgradeto2_0.html
+
+that describes all breaking changes and helps when upgrading to the new
+version. One obvious breaking change is the renaming of the main package
+(all classes are now located under org.apache.commons.configuration2) and the
+Maven coordinates (groupId: org.apache.commons, artifactId:
+commons-configuration2). This was necessary to allow both versions to coexist
+on the classpath without conflicts.
+
+The user's guide has been completely reworked to describe all features of the
+new version. It can be found at
+
+http://commons.apache.org/configuration/userguide/user_guide.html
+
+Changes:
+========
+o CONFIGURATION-621:
+  Moved ConfigurationLogger class to io package to avoid cyclic dependencies
+  between packages.
+o CONFIGURATION-619:
+  CombinedConfigurationBuilder now supports inheritance of its parameters to
+  child configuration sources. This is enabled by default.
+o CONFIGURATION-615:
+  Changed generic types in the signatures of a MapConfiguration constructor
+  and AbstractConfiguration.getList(String, List). These changes were made in
+  version 1.10 as fixes for CONFIGURATION-557 and CONFIGURATION-558. But it
+  had been missed to merge them to trunk.
+
+Fixed Bugs:
+===========
+o CONFIGURATION-620:
+  Fixed two invalid examples in the user's guide for file-based configurations.
+o CONFIGURATION-618:
+  When using immutable configurations exceptions thrown by the wrapped
+  configuration came out as UndeclaredThrowableException. This has been fixed;
+  now the correct original exception is thrown.
+
+Commons Configuration 2.0 requires Java 1.6 or higher.
+
+                        Commons Configuration Package
+                             Version 2.0-beta2
+                                Release Notes
+
+After the first beta release in June 2015 there has been some feedback from the
+community resulting in (minor) adaptations of the API. In most cases, the
+return values of methods have been changed to be more generic. There has also
+been a change in the support for logging. Therefore, this second beta release
+is provided to make these changes more "official".
+
+This release also includes some bug fixes. The bugs addressed here have partly
+existed already in the Configuration 1.0 code base; so these fixes are not all
+related to changes introduced in the 2.0 version.
+
+Below is a list of all changes in this version. Please refer to the clirr
+report at http://commons.apache.org/proper/commons-configuration/clirr-report.html
+for information about changes which break binary compatibility.
+
+Changes:
+========
+o CONFIGURATION-614:
+  References to Commons Logging have been removed from the Configuration API.
+  It is still possible to influence logging by making use of the new
+  ConfigurationLogger abstraction.
+o CONFIGURATION-612:
+  The return type of ConfigurationBuilder.getConfiguration() was changed from
+  Configuration to ImmutableConfiguration because this is the base interface
+  for all configuration objects. Thanks to Jon Weygand.
+o CONFIGURATION-608:
+  Adapted the return type of ReloadingFileBasedConfigurationBuilder.configure().
+
+Fixed Bugs:
+===========
+o CONFIGURATION-609:
+  Fixed a bug in PropertiesConfiguration related to the loading of include
+  files. The FileHandler used for this purpose was not fully initialized.
+o CONFIGURATION-605:
+  XMLConfiguration no longer drops keys when list delimiter characters occur
+  in element values.
+o CONFIGURATION-604:
+  Fixed a problem in the conversion of a flat configuration to a hierarchical
+  one that could cause the loss of properties in a combined configuration
+  constructed by an override combiner.
+
+Commons Configuration 2.0-beta2 requires Java 1.6 or higher.
+
+Historical list of changes: http://commons.apache.org/proper/commons-configuration/changes-report.html
+
+For complete information on Apache Commons Configuration, including instructions
+on how to submit bug reports, patches, or suggestions for improvement, see the
+Apache Commons Configuration website:
+http://commons.apache.org/proper/commons-configuration/
+
+                        Commons Configuration Package
+                             Version 2.0-beta1
+                                Release Notes
+
+This is the first beta release of Commons Configuration 2.0 after two alpha
+versions. There has not been much feedback so far and no requests for API
+changes. Therefore, we move forwards to a beta release indicating that the API
+can be considered more stable. However, at this stage, changes of the API can
+still not be fully excluded.
+
+Below is a list of all changes in this version. Compared to version 2.0-alpha2,
+there has only be a single change: an obsolete interface (which had been
+overlooked during a major refactoring) was removed. So applications that are
+using 2.0-alpha2 should be able to migrate to 2.0-beta1 without problems.
+
+Changes:
+========
+o CONFIGURATION-598: Removed obsolete ConfigurationBuilder interface in the
+                     base package.
+
+
+                        Commons Configuration Package
+                             Version 2.0-alpha2
+                                Release Notes
+
+
+After version 2.0-alpha1 has been out for a while (the corresponding release
+notes can be found below), this second alpha release contains a few number of
+improvements and new features whose implementation required some changes on
+existing interfaces. In most cases, new methods were added offering enhanced
+functionality. Because these are typically interfaces implemented by the
+library itself client code using the previous alpha version should hardly be
+affected.
+
+Below is a list of all changes in this version:
+
+New features:
+=============
+o CONFIGURATION-574:  DefaultExpressionEngine can now be customized to match
+                      configuration keys in a case-insensitive manner. This is useful
+                      for instance for dealing with Windows INI files.
+o CONFIGURATION-565:  Added support for querying encoded properties.
+o CONFIGURATION-200:  A size() method was added to the ImmutableConfiguration interface.
+
+Fixed Bugs:
+===========
+o CONFIGURATION-564:  PropertiesConfiguration now supports again properties without a
+                      value and a separator character. The keys of such properties
+                      are added to the configuration with an empty String as value.
+o CONFIGURATION-427:  XMLPropertyListConfiguration can now save arrays in the correct form.
+
+Historical list of changes: http://commons.apache.org/proper/commons-configuration/changes-report.html
+
+For complete information on Apache Commons Configuration, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Configuration website:
+
+http://commons.apache.org/proper/commons-configuration/
+
+                        Commons Configuration Package
+                             Version 2.0-alpha1
+                                Release Notes
+
+This is the first alpha release for version 2.0 of Commons Configuration.
+Version 2 is a major redesign of the Configuration API. It breaks compatibility
+in many areas and, therefore, is not a drop-in replacement for Commons
+Configuration 1.x. To allow collaboration with an older version of the library
+(and to prevent jar and dependency hell), the top-level package and the Maven
+coordinates have been changed. There is an upgrade guide available at
+
+http://commons.apache.org/configuration/userguide/upgradeto2_0.html
+
+describing the most important breaking changes. Be sure to read this
+document if you want to switch from a 1.x version to this new version. The
+user's guide which can be found at
+
+http://commons.apache.org/configuration/userguide/user_guide.html
+
+has been reworked to cover all the new and changed features.
+
+The main purpose of this alpha release is to gather feedback from the
+community about the reworked API. IT IS NOT YET PRODUCTION READY. It is
+expected that there will still be some changes on the public API.
+
+Below is a list of all changes in this version:
+
+New features:
+=============
+o CONFIGURATION-579:  A migration guide has been created which supports when upgrading from
+                      version 1.x to 2.0.
+o CONFIGURATION-559:  It is now possible to define default values for initialization
+                      properties of configurations.
+o CONFIGURATION-551:  The data type conversion mechanism has been made extensible. There is a
+                      new interface ConversionHandler which controls the data type conversions
+                      available for a configuration object. By setting a custom implementation,
+                      conversions can be adapted or extended.
+o CONFIGURATION-550:  Conversion to Character is now supported.
+o CONFIGURATION-541:  Multi-file configurations are no longer restricted to XML configuration
+                      files. Arbitrary file-based configurations are now supported.
+o CONFIGURATION-535:  DatabaseConfiguration now provides get methods for querying its
+                      properties defining the underlying database structures.
+o CONFIGURATION-533:  DatabaseConfiguration now automatically converts CLOBs to strings if
+                      they appear in property values.
+o CONFIGURATION-525:  PropertiesConfiguration now keeps a comment at the bottom of a
+                      properties file. A new footer property was added for reading and
+                      writing this footer comment.
+o CONFIGURATION-519:  Configuration objects are now created via configuration builders. A new
+                      API for configuration builders has been added.
+o CONFIGURATION-517:  Hierarchical configurations now provide methods to obtain sub
+                      configurations for all child elements of a given key.
+o CONFIGURATION-514:  Bean declarations now support constructor invocations.
+o CONFIGURATION-512:  It is now possible to obtain an immutable view on a Configuration or
+                      HierarchicalConfiguration object. New interfaces,
+                      ImmutableConfiguration, and ImmutableHierarchicalConfiguration have
+                      been introduced.
+o CONFIGURATION-508:  Generic get() methods have been added to the Configuration interface.
+                      These methods expect a target class and try to convert the value of
+                      the specified property to this target class.
+o CONFIGURATION-204:  With the new reloading mechanism automatic and periodic reloading checks
+                      can be performed.
+o CONFIGURATION-202:  Reloading checks can now be performed in a background thread.
+
+Fixed Bugs:
+===========
+o CONFIGURATION-582:  Fixed a StringIndexOutOfBoundsException in PropertiesConfigurationLayout
+                      which was caused by lines containing only whitespace.
+o CONFIGURATION-572:  When a CombinedConfiguration is cleared it removes itself as change
+                      listener from all child configurations. This fixes a possible memory
+                      leak.
+o CONFIGURATION-570:  Fixed a possible ConcurrentModificationException when a SystemConfiguration
+                      instance is passed to the append() or copy() methods.
+o CONFIGURATION-567:  XMLBeanDeclaration now escapes node names before they are used to
+                      determine nested properties. Thanks to Shen liang.
+
+Changes:
+o CONFIGURATION-591:  Removed methods from ConfigurationConverter related to ExtendedProperties.
+                      This class is no longer supported by recent versions of Commons
+                      Collections.
+o CONFIGURATION-590:  Removed Serializable interface from all configuration implementations.
+                      Some configuration classes declared this interface without being
+                      actually serializable.
+o CONFIGURATION-588:  The name of the top-level package and the maven coordinates have been
+                      changed to allow a coexistence of Commons Configuration 1.x with 2.0.
+o CONFIGURATION-584:  The event mechanism has been reworked. There is now a generic event
+                      listener interface which can be used to receive notifications from
+                      multiple types of event sources.
+o CONFIGURATION-578:  The user's guide has been fully reworked to cover all new and enhanced
+                      features of version 2.0.
+o CONFIGURATION-577:  The dependency to Commons Collections is no longer needed.
+o CONFIGURATION-576:  A new abstract base class for hierarchical configurations was introduced
+                      which supports arbitrary hierarchical data structures. The type of the
+                      nodes used by the configuration can now be specified as a generic type
+                      argument. This makes the integration of other hierarchical structures
+                      easier.
+o CONFIGURATION-575:  Hierarchical configurations now operate on immutable structures.
+                      Data is no longer represented by ConfigurationNode objects. The
+                      ImmutableNode class now serves as data container.
+o CONFIGURATION-573:  XPathExpressionEngine can now deal with namespace prefixes in node and
+                      attribute names.
+o CONFIGURATION-563:  The DefaultExpressionEngine class is now immutable. An instance can be
+                      shared between multiple configuration objects.
+o CONFIGURATION-562:  Improved the API of ExprLookup.
+o CONFIGURATION-555:  Fixed a bug in the handling of the xml:space attribute in
+                      XMLConfiguration. The attribute is now also applied to the current
+                      element, not only to sub elements.
+o CONFIGURATION-554:  BeanHelper is no longer a static utility class. Instances can be
+                      created with a specific configuration of bean factories. There is still
+                      a default instance which can be obtained via the BeanHelper.INSTANCE
+                      field.
+o CONFIGURATION-553:  The code for accessing configuration files has been reworked. Methods
+                      related to locating configuration files have been moved from
+                      ConfigurationUtils to a new FileLocatorUtils class. Customizable
+                      strategy classes (implementing the new FileLocationStrategy) can be
+                      used for searching for configuration files.
+o CONFIGURATION-546:  BeanHelper can now process BeanDefinitions initializing properties of
+                      collection types of their target beans. Thanks to Justin Couch.
+o CONFIGURATION-544:  Added missing dependencies to build.xml. Thanks to Oliver Kopp.
+o CONFIGURATION-542:  The mechanism for synchronizing configurations has been completely
+                      redesigned. It is now based on Synchronizer objects which can be
+                      configured by client code. A new chapter was added to the user's guide
+                      regarding thread-safety of configurations.
+o CONFIGURATION-540:  MapConfiguration now directly uses a Properties object passed to its
+                      constructor as data store rather than copying it. This allows
+                      SystemConfiguration to be connected to system properties; i.e.
+                      changing a property through SystemConfiguration immediately affects
+                      the corresponding system property.
+o CONFIGURATION-539:  The deprecated INIConfiguration class was removed.
+                      HierarchicalINIConfiguration was renamed to INIConfiguration.
+o CONFIGURATION-537:  The deprecated ConfigurationFactory class was removed.
+o CONFIGURATION-536:  File-based configurations are now implemented in a different way.
+                      The interfaces FileConfiguration and ReloadingStrategy have been
+                      removed, also the base classes AbstractFileConfiguration and
+                      AbstractHierarchicalFileConfiguration. They are replaced by the
+                      FileBased interface and the FileHandler class which implements
+                      central I/O functionality. Reloading is now in the responsibility of
+                      configuration builders.
+o CONFIGURATION-534:  The includesAllowed property of PropertyConfiguration is now independent
+                      from the existence of a base path.
+o CONFIGURATION-530:  Concurrent access to configurations and reloading have been completely
+                      redesigned. Because reloading is now handled by configuration builders
+                      there is no need to acquire a lock in order to protected against a
+                      reload operations.
+o CONFIGURATION-527:  AbstractConfiguration.clearPropertyDirect() is now abstract. Thanks to Matthias Richter.
+o CONFIGURATION-526:  XMLPropertiesConfiguration now supports loading from and saving to DOM
+                      nodes. Thanks to Oliver Kopp.
+o CONFIGURATION-524:  Interpolation now works correctly after a configuration was cloned.
+                      The ConfigurationInterpolator instance is now cloned, too.
+o CONFIGURATION-521:  ConfigurationUtils.fileFromUrl() now correctly handles URL containing
+                      encoded percent characters. Thanks to Oliver Kopp.
+o CONFIGURATION-520:  Support for reloading of configuration data has been reworked.
+o CONFIGURATION-518:  Classes and interfaces related to interpolation have been slightly
+                      reworked. ConfigurationInterpolator is now thread-safe. There are
+                      multiple ways to define the ConfigurationInterpolator object to be
+                      used by an AbstractConfiguration instance.
+o CONFIGURATION-516:  PropertiesConfiguration no longer escapes double quotes on saving.
+o CONFIGURATION-515:  The visibility of some internal methods of PropertiesConfiguration.PropertiesWriter
+                      has been increased to protected. This simplifies the implementation of
+                      a custom escaping strategy.
+o CONFIGURATION-513:  HierarchicalConfiguration is now an interface. The base implementation
+                      class is named BaseHierarchicalConfiguration.
+o CONFIGURATION-506:  Removed obsolete nested classes Node and NodeVisitor of
+                      HierarchicalConfiguration. The related deprecated class
+                      ConfigurationKey was removed, too.
+o CONFIGURATION-505:  XMLConfiguration no longer supports attributes with multiple values or
+                      list delimiter parsing in attributes. This feature was complex and
+                      error prone and brought little value to the user.
+o CONFIGURATION-504:  SubnodeConfiguration now provides a new method for clearing it and
+                      removing its root node from the parent configuration. The method
+                      HierarchicalConfiguration.configurationsAt() now returns a list
+                      of SubnodeConfiguration so that it is easier to make direct use of
+                      this feature.
+o CONFIGURATION-500:  XMLConfiguration now adds attributes of elements defining a list to
+                      all list nodes.
+o CONFIGURATION-496:  Concurrent access to configurations and reloading have been completely
+                      redesigned. This should reduce the amount of synchronization.
+o CONFIGURATION-486:  Removed some static fields for specifying global default values.
+                      Using static fields in this way is thread-hostile. There are now
+                      alternatives for setting default values.
+o CONFIGURATION-462:  Updated dependency to Commons Lang from version 2.6 to 3.1.
+o CONFIGURATION-419:  EventSource is now an interface. With BaseEventSource there is a
+                      default implementation.
+o CONFIGURATION-418:  The handling of list delimiters and their escape characters has been
+                      reworked. A new ListDelimiterHandler interface was introduced allowing
+                      applications to customize the treatment of list delimiters.
+o CONFIGURATION-330:  Concurrent access to configurations has been reworked.
+o CONFIGURATION-153:  It is now possible to define the strategy used for locating
+                      configuration files.
+o CONFIGURATION-136:  Reloading can no longer corrupt a configuration instance. This is now
+                      handled by a configuration builder; the original configuration instance
+                      is not modified.
+o CONFIGURATION-26:   It is now possible to influence the conversion from a container object
+                      (a collection or an array) to a single value (e.g. what is returned by
+                      getString() if the current property has multiple values). Per default,
+                      the first value is returned. By overriding methods of the
+                      configuration's ConversionHandler, this behavior can be changed.
+
+
+Historical list of changes: http://commons.apache.org/proper/commons-configuration/changes-report.html
+
+For complete information on Apache Commons Configuration, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Configuration website:
+
+http://commons.apache.org/proper/commons-configuration/
