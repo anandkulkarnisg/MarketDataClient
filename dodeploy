@@ -2,8 +2,8 @@
 
 backupcwd=$PWD
 cwd=$PWD
-if [ "$cwd" != "/home/anand/repogit/java/eclipse/MarketDataClients" ] ; then
-	cd /home/anand/repogit/java/eclipse/MarketDataClients
+if [ "$cwd" != "/home/anand/git/MarketDataClient" ] ; then
+	cd /home/anand/git/MarketDataClient
 	cwd=$PWD
 fi
 

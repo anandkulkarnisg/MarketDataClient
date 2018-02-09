@@ -99,8 +99,11 @@ public class ICICIHelperUtils
 		{
 			logger.error(
 					"Caught exception while parsing and processing data for symbol = " + stockName + ", The tick sequence was at " + counter + "The exception details are below");
-			logger.error(e.getStackTrace().toString());
-			e.printStackTrace();
+			String logMessage = "";		
+			for(StackTraceElement stackTraceElement : e.getStackTrace()) {                         
+			    logMessage = logMessage + System.lineSeparator() + stackTraceElement.toString();
+			}
+			logger.error(logMessage);
 		}
 
 		if (overAllParseStatus)
