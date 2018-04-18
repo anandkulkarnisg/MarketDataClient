@@ -25,7 +25,7 @@ public class ICICIHelperUtils
 		System.out.println("Finished tick count sequence =" + counter);
 	}
 
-	public static void csvFormatResultPrinter(ICICIResultParser resultParser, String stockName, long counter)
+	public static boolean csvFormatResultPrinter(ICICIResultParser resultParser, String stockName, long counter)
 	{
 
 		ICICITickEvent tickEvent = null;
@@ -130,6 +130,8 @@ public class ICICIHelperUtils
 				}
 			}
 		}
+		
+		return(overAllParseStatus);
 	}
 
 	public static void printCsvHeader()

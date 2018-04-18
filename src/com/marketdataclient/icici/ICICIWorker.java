@@ -10,7 +10,7 @@ import com.marketdataclient.icici.ICICIResultParser.exchangeInfo;
 public class ICICIWorker implements Runnable
 {
 	final static Logger logger = LogManager.getLogger(ICICIWorker.class);
-	
+
 	private String stockName;
 	static AtomicInteger atomicInteger = new AtomicInteger(0);
 	static boolean printTickResults = true;
@@ -18,13 +18,14 @@ public class ICICIWorker implements Runnable
 	static boolean isBSE = false;
 	static long tickSequenceLimit = 10000;
 	static int cycleSleepDuration = 0;
+
 	public enum tickDestination
 	{
 		STDOUT, KDB
 	}
 
 	private static tickDestination destination;
-	
+
 	public static tickDestination getDestination()
 	{
 		return destination;
@@ -127,14 +128,23 @@ public class ICICIWorker implements Runnable
 					if (isNSE())
 					{
 						ICICIResultParser nseResultParser = new ICICIResultParser(streamResultMap, exchangeInfo.NSE);
-						ICICIHelperUtils.csvFormatResultPrinter(nseResultParser, stockName, counter);
+						boolean nseResultStatus = ICICIHelperUtils.csvFormatResultPrinter(nseResultParser, stockName, counter);
+						if (!nseResultStatus)
+						{
+							counter = getTickSequenceLimit();
+							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for NSE. Hence giving up on this symbol completely. Please investigate in debug mode for details");
+						}
 					}
 
 					if (isBSE())
 					{
 						ICICIResultParser bseResultParser = new ICICIResultParser(streamResultMap, exchangeInfo.BSE);
-						ICICIHelperUtils.csvFormatResultPrinter(bseResultParser, stockName, counter);
-
+						boolean bseResultStatus = ICICIHelperUtils.csvFormatResultPrinter(bseResultParser, stockName, counter);
+						if (!bseResultStatus)
+						{
+							counter = getTickSequenceLimit();
+							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for BSE. Hence giving up on this symbol completely. Please investigate in debug mode for details");
+						}
 					}
 				}
 			} else
