@@ -132,7 +132,8 @@ public class ICICIWorker implements Runnable
 						if (!nseResultStatus)
 						{
 							counter = getTickSequenceLimit();
-							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for NSE. Hence giving up on this symbol completely. Please investigate in debug mode for details");
+							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for NSE. Hence giving up on this symbol completely.");
+							logger.fatal("Please investigate in debug mode for details.");
 						}
 					}
 
@@ -143,7 +144,8 @@ public class ICICIWorker implements Runnable
 						if (!bseResultStatus)
 						{
 							counter = getTickSequenceLimit();
-							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for BSE. Hence giving up on this symbol completely. Please investigate in debug mode for details");
+							logger.fatal("The " + stockName + " Has issues with its page fetched. Parsing failed for BSE. Hence giving up on this symbol completely.");
+							logger.fatal("Please investigate in debug mode for details.");
 						}
 					}
 				}
