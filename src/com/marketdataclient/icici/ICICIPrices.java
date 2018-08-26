@@ -19,7 +19,7 @@ import com.marketdataclient.icici.ICICIResultParser.exchangeInfo;
 public class ICICIPrices extends LivePrices
 {
 	final static Logger logger = LogManager.getLogger(ICICIPrices.class);
-	private static final String ICICI_QUOTEBASE_URL = "http://getquote.icicidirect.com/trading_stock_quote.aspx?Symbol=";
+	private static final String ICICI_QUOTEBASE_URL = "https://getquote.icicidirect.com/trading_stock_quote.aspx?Symbol=";
 	private String symbol;
 	String urlString = ICICI_QUOTEBASE_URL;
 	private int lastHashCode;
@@ -84,7 +84,10 @@ public class ICICIPrices extends LivePrices
 		// at
 		// +3 = 164 and BSE price is at +6 = 167
 
-		getRawLiveStream(urlString);
+		if(urlString.startsWith("http://"))
+			getRawLiveStream(urlString);
+		else
+			getHttpsRawLiveStream(urlString);
 		String[] liveStreamData = getRawStreamAsArray();
 		int counter = 0;
 

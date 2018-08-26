@@ -2,6 +2,7 @@ package com.marketdataclient.icici;
 
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
@@ -62,11 +63,14 @@ public class ICICIWorkerManager
 		return config;
 	}
 
-	static private void runInThreadedMode(String[] stockItems, MarketDataConfigManager marketDataConfig)
+	static private void runInThreadedMode(String[] stockItems, MarketDataConfigManager marketDataConfig) 
 	{
 		Boolean tickDisplayMode = marketDataConfig.getBooleanConfig("displayMode", false);
 		ExecutorService executor = Executors.newFixedThreadPool(stockItems.length);
 
+		// We need a count Down Latch for all threads to count down upon finishing and we can wait here.
+		CountDownLatch latch = new CountDownLatch(stockItems.length);
+		
 		ICICIWorker.setPrintTickResults(tickDisplayMode);
 		Boolean NSEStatus = marketDataConfig.getBooleanConfig("NSEStatus", true);
 		Boolean BSEStatus = marketDataConfig.getBooleanConfig("BSEStatus", true);
@@ -99,7 +103,7 @@ public class ICICIWorkerManager
 
 		for (int i = 0; i < stockItems.length; i++)
 		{
-			Runnable worker = new ICICIWorker(stockItems[i]);
+			Runnable worker = new ICICIWorker(stockItems[i], latch);
 			executor.execute(worker);
 		}
 
@@ -111,18 +115,15 @@ public class ICICIWorkerManager
 		ICICIKdbTickPublisher kdbTickPublisher = new ICICIKdbTickPublisher(kdbPublisherThreads, kdbServer, kdbPort);
 		kdbTickPublisher.start();
 
-		while (!ICICIWorker.allThreadsFinished())
+		try
 		{
-			try
-			{
-				Thread.sleep(1000);
-				logger.info("There are " + tickDataQueue.getTickDataQueueSize() + " Items in the queue waiting to be processed");
-			} catch (InterruptedException e)
-			{
-
-			}
+			latch.await();
 		}
-
+		catch(InterruptedException e)
+		{
+			logger.error("The ICICIWorkerManager recieved a Interruption on the thread while waiting on the count down Latch for finishing of the worker threads");
+		}
+		
 		logger.info("All stock publisher threads have finished.");
 
 		while (tickDataQueue.getTickDataQueueSize() > 0)

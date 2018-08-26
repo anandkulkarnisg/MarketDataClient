@@ -1,7 +1,7 @@
 package com.marketdataclient.cnbc;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,10 +10,10 @@ public class CNBCWorker implements Runnable
 	final static Logger logger = LogManager.getLogger(CNBCWorker.class);
 
 	private String stockName;
-	static AtomicInteger atomicInteger = new AtomicInteger(0);
 	static boolean printTickResults = true;
 	static long tickSequenceLimit = 10000;
 	static int cycleSleepDuration = 0;
+	private CountDownLatch latch;
 
 	public enum tickDestination
 	{
@@ -65,25 +65,12 @@ public class CNBCWorker implements Runnable
 	public CNBCWorker(String name)
 	{
 		stockName = name;
-		setAtomicInteger(atomicInteger.get() + 1);
 	}
-
-	public static int getAtomicInteger()
+	
+	public CNBCWorker(String name, CountDownLatch inputLatch)
 	{
-		return atomicInteger.get();
-	}
-
-	public static void setAtomicInteger(int atomicInteger)
-	{
-		CNBCWorker.atomicInteger.set(atomicInteger);
-	}
-
-	public static boolean allThreadsFinished()
-	{
-		if (getAtomicInteger() == 0)
-			return (true);
-		else
-			return (false);
+		stockName = name;
+		latch = inputLatch;
 	}
 
 	@Override
@@ -119,7 +106,7 @@ public class CNBCWorker implements Runnable
 			++counter;
 		}
 
-		setAtomicInteger(atomicInteger.get() - 1);
+		latch.countDown();
 	}
 
 }

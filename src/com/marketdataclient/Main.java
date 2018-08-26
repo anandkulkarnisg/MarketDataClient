@@ -18,7 +18,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		// Set a default publisher Type.
-		publisherType publisher = publisherType.ICICI;
+		publisherType publisher = publisherType.CNBC;
 
 		if (args.length > 0)
 			publisher = publisherType.valueOf(args[0].toUpperCase());
@@ -31,12 +31,19 @@ public class Main
 
 		// Load the stock symbols required for the WorkerManager.
 		String[] symbolList = marketDataConfig.loadEquitySymbolsFromConfigFile();
+		
+		// Anand Kulkarni - 25/08/2018 - The ICICI Market data fetcher is not working as expected. Reason is entire page layout has changed on ICICI side.
+		// NSE prices are no more publically available / visible on the page. BSE prices are available though. I am stopping this development work now.
+		// CNBC market data fetcher does work still as expected since it uses a more stable quote page query framework.
+		
+		// Please consider ICICI market feed as unmaintained work further. It kicks out and exits now without running it.
 
 		switch (publisher)
 		{
 		case ICICI:
-			ICICIWorkerManager iciciWorkerManager = new ICICIWorkerManager(marketDataConfig, symbolList);
-			iciciWorkerManager.start();
+			logger.error("The ICICI market feed is no longer maintained and does not work/fetch data as expected. This is due to NSE market data availability and page structure changes on ICICI side.");
+			//ICICIWorkerManager iciciWorkerManager = new ICICIWorkerManager(marketDataConfig, symbolList);
+			//iciciWorkerManager.start();
 			break;
 
 		case CNBC:

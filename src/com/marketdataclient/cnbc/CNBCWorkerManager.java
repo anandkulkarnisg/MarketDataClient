@@ -2,6 +2,7 @@ package com.marketdataclient.cnbc;
 
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
@@ -86,6 +87,8 @@ public class CNBCWorkerManager
 		int queueSize = (int) ((tickSequenceLimit.intValue() * stockItems.length) * capacityAdjFactor);
 		setTickDataQueue(new ArrayBlockingQueue<CNBCTickEvent>(queueSize));
 
+		CountDownLatch latch = new CountDownLatch(stockItems.length);
+		
 		logger.info("Set the below configuration for the cnbc worker threades. The tick display mode is set to " + tickDisplayMode.toString());
 
 		if (!tickDisplayMode)
@@ -93,7 +96,7 @@ public class CNBCWorkerManager
 
 		for (int i = 0; i < stockItems.length; i++)
 		{
-			Runnable worker = new CNBCWorker(stockItems[i]);
+			Runnable worker = new CNBCWorker(stockItems[i], latch);
 			executor.execute(worker);
 		}
 
@@ -104,17 +107,14 @@ public class CNBCWorkerManager
 
 		CNBCKdbTickPublisher kdbTickPublisher = new CNBCKdbTickPublisher(kdbPublisherThreads, kdbServer, kdbPort);
 		kdbTickPublisher.start();
-
-		while (!CNBCWorker.allThreadsFinished())
+	
+		try
 		{
-			try
-			{
-				Thread.sleep(1000);
-				logger.info("There are " + tickDataQueue.getTickDataQueueSize() + " Items in the queue waiting to be processed");
-			} catch (InterruptedException e)
-			{
-
-			}
+			latch.await();
+		}
+		catch(InterruptedException e)
+		{
+			logger.error("The CNBCWorkerManager recieved a Interruption on the thread while waiting on the count down Latch for finishing of the worker threads");
 		}
 
 		logger.info("All stock publisher threads have finished.");

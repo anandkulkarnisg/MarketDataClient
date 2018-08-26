@@ -1,7 +1,7 @@
 package com.marketdataclient.icici;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,12 +12,12 @@ public class ICICIWorker implements Runnable
 	final static Logger logger = LogManager.getLogger(ICICIWorker.class);
 
 	private String stockName;
-	static AtomicInteger atomicInteger = new AtomicInteger(0);
 	static boolean printTickResults = true;
 	static boolean isNSE = false;
 	static boolean isBSE = false;
 	static long tickSequenceLimit = 10000;
 	static int cycleSleepDuration = 0;
+	CountDownLatch latch;
 
 	public enum tickDestination
 	{
@@ -89,25 +89,12 @@ public class ICICIWorker implements Runnable
 	public ICICIWorker(String name)
 	{
 		stockName = name;
-		setAtomicInteger(atomicInteger.get() + 1);
 	}
 
-	public static int getAtomicInteger()
+	public ICICIWorker(String name, CountDownLatch inputLatch)
 	{
-		return atomicInteger.get();
-	}
-
-	public static void setAtomicInteger(int atomicInteger)
-	{
-		ICICIWorker.atomicInteger.set(atomicInteger);
-	}
-
-	public static boolean allThreadsFinished()
-	{
-		if (getAtomicInteger() == 0)
-			return (true);
-		else
-			return (false);
+		stockName = name;
+		latch = inputLatch;
 	}
 
 	@Override
@@ -151,6 +138,7 @@ public class ICICIWorker implements Runnable
 				}
 			} else
 			{
+				logger.fatal("The " + stockName + " Has problem with its page data or content and we could not derive any price fields from its content.Hence giving up further attempts.");
 				counter = getTickSequenceLimit();
 			}
 
@@ -163,7 +151,7 @@ public class ICICIWorker implements Runnable
 			++counter;
 		}
 
-		setAtomicInteger(atomicInteger.get() - 1);
+		latch.countDown();
 	}
 
 }
